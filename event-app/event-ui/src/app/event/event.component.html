@@ -1,0 +1,82 @@
+<div class="col-md-12">
+  <div class="card card-container">  
+    <h3>Add New Event</h3>  
+    <form
+      *ngIf="!isSuccessful"
+      name="form"
+      (ngSubmit)="f.form.valid && onSubmit()"
+      #f="ngForm"
+      novalidate
+    >
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input
+          type="text"
+          class="form-control"
+          name="name"
+          [(ngModel)]="form.name"
+          required         
+          #name="ngModel"
+        />
+        <div class="alert-danger" *ngIf="name.errors && f.submitted">
+          <div *ngIf="name.errors.required">Name is required</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="location">Location</label>
+        <input
+          type="text"
+          class="form-control"
+          name="location"
+          [(ngModel)]="form.location"
+          required         
+          #location="ngModel"
+        />
+        <div class="alert-danger" *ngIf="location.errors && f.submitted">
+          <div *ngIf="location.errors.required">Location is required</div>
+          
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="description">Desription</label>
+        <input
+          type="text"
+          class="form-control"
+          name="description"
+          [(ngModel)]="form.description"
+          required
+          #description="ngModel"
+        />
+        <div class="alert-danger" *ngIf="description.errors && f.submitted">
+          <div *ngIf="description.errors.required">Description is required</div>         
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="time">Time</label>
+        <input
+          type="datetime"
+          class="form-control"
+          name="time"
+          [(ngModel)]="form.time"
+          required         
+          #time="ngModel"
+        />
+        <div class="alert-danger" *ngIf="time.errors && f.submitted">
+          <div *ngIf="time.errors.required">Time required</div>
+         
+        </div>
+      </div>
+      <div class="form-group">
+        <button class="btn btn-primary btn-block">Create Event</button>
+      </div>
+
+      <div class="alert alert-warning" *ngIf="f.submitted && isSignUpFailed">
+        Creat event failed!<br />{{ errorMessage }}
+      </div>
+    </form>
+
+    <div class="alert alert-success" *ngIf="isSuccessful">
+      Your event created successfully
+    </div>
+  </div>
+</div>

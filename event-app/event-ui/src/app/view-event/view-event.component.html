@@ -1,0 +1,90 @@
+<div class="col-md-12">
+  <h3>Event Details</h3>
+
+ 
+  <div class="alert alert-danger" *ngIf="isRequested && isFailed">
+    You alread have event at the same time
+  </div>
+  <p>
+    <span> Name: </span>
+    <b>{{event.name}}</b>
+  </p>
+  <p>
+    <span> Location: </span>
+    <b>{{event.location}}</b>
+  </p>
+
+  <p>
+    <span> Description: </span>
+    <b>{{event.description}}</b>
+  </p>
+
+  <p>
+    <span> Time: </span>
+    <b>{{event.time}} </b>
+  </p>
+
+  <p>
+    <span> Created At: </span>
+    <b>{{event.createdAt}} </b>
+  </p>
+
+
+
+  <p>
+    <span>Organized By: </span>
+    <b>{{event.organizer.name}} </b>
+  </p>
+
+  <p>
+    <span> Total Goining: </span>
+    <b>{{goingTotal}} </b>    
+  </p>
+
+  <td ><button *ngIf='!alreadyRequested() && !currentUserEvent' (click)="request(event.id)" class="btn btn-success">Request</button></td>  
+  <td ><button *ngIf='requestApproved() && !alreadyGoing() && !currentUserEvent' (click)="joining(event.id)" class="btn btn-primary">Going</button></td>  
+  
+  
+  <h3>Participants</h3>
+
+  <table class="table table-striped">
+    <thead>
+       <tr>
+          <th scope="col">Name</th>
+          <th scope="col">Email</th>
+          <th scope="col">Status</th>
+       </tr>
+     </thead>
+     <tbody>  
+     
+      <tr *ngFor="let item of content">
+        <td>{{item.participant.name}}</td>
+        <td>{{item.participant.user.email}}</td>
+        <td>{{item.approved?"Approved":"Pending"}}</td>
+        <td ><button *ngIf='currentUserEvent && !item.approved' (click)="approve(item.id)" class="btn btn-success">Approve</button></td>
+        <td ><button *ngIf='currentUserEvent' (click)="updateOrganizer(event.id, item.id)" class="btn btn-danger">Organizer</button></td>
+    </tr>
+     </tbody>
+     
+</table>
+
+
+<h3>Comments</h3>
+
+
+<span *ngFor="let com of event.comment">
+  <p class="card">
+    {{com.text}} <br/><i class="float-right">{{com.participant.name}}</i>
+    </p> 
+</span>
+
+<span *ngIf= "requestApproved()">
+<div class="form-group">
+  <textarea class="form-control" id="messageArea" #messageArea rows="3" placeholder="Type your message"></textarea>
+
+  <button class="float-right btn btn-primary pull-right" (click)="post(messageArea.value, event.id)">Post</button>
+  <br/>
+</div>
+</span>
+
+</div>
